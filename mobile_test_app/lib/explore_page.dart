@@ -1,0 +1,771 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'therapist_profile_page.dart';
+import 'ovi_landing_page.dart';
+
+class ExplorePage extends StatefulWidget {
+  const ExplorePage({super.key});
+
+  @override
+  State<ExplorePage> createState() => _ExplorePageState();
+}
+
+class _ExplorePageState extends State<ExplorePage> {
+  int selectedTabIndex = 0;
+  int selectedDateIndex = 2; // Today is selected by default
+
+  final List<String> weekDays = ['Mon', 'Tue', 'Today', 'Thu', 'Fri'];
+  final List<int> dates = [23, 24, 25, 26, 27];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header
+            _buildHeader(),
+            
+            // Main Content
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // Tab Section (Therapist/Clinic)
+                    _buildTabSection(),
+                    
+                    // Filter Pills
+                    _buildFilterSection(),
+                    
+                    // Date Selector
+                    _buildDateSelector(),
+                    
+                    // Therapist List
+                    _buildTherapistList(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: _buildBottomNavigation(),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // Top bar with back button, title, and filter
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                ),
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color(0xFF131711),
+                    size: 24,
+                  ),
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'Explore',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.manrope(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF131711),
+                  ),
+                ),
+              ),
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                ),
+                child: Stack(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.tune,
+                        color: Color(0xFF131711),
+                        size: 24,
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                        Positioned(
+                          top: 4,
+                          right: 4,
+                          child: Container(
+                            width: 16,
+                            height: 16,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFE64CB3),
+                              shape: BoxShape.circle,
+                            ),
+                        child: Center(
+                          child: Text(
+                            '3',
+                            style: GoogleFonts.manrope(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Search Bar
+          Container(
+            height: 48,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF4F0F3),
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 12, right: 8),
+                  child: Icon(
+                    Icons.search,
+                    color: Color(0xFF6C8764),
+                    size: 20,
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search for therapists or clinics',
+                      hintStyle: GoogleFonts.manrope(
+                        fontSize: 16,
+                        color: const Color(0xFF6C8764),
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    style: GoogleFonts.manrope(
+                      fontSize: 16,
+                      color: const Color(0xFF131711),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabSection() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xFFF1F4F0),
+            width: 1,
+          ),
+        ),
+      ),
+      child: Container(
+        height: 40,
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF4F0F3),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedTabIndex = 0;
+                  });
+                },
+                child: Container(
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: selectedTabIndex == 0 ? Colors.white : Colors.transparent,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: selectedTabIndex == 0 ? [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 2,
+                        offset: const Offset(0, 1),
+                      ),
+                    ] : null,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Therapist',
+                      style: GoogleFonts.manrope(
+                        fontSize: 14,
+                        fontWeight: selectedTabIndex == 0 ? FontWeight.w600 : FontWeight.w500,
+                        color: selectedTabIndex == 0 ? const Color(0xFF131711) : const Color(0xFF6C8764),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedTabIndex = 1;
+                  });
+                },
+                child: Container(
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: selectedTabIndex == 1 ? Colors.white : Colors.transparent,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: selectedTabIndex == 1 ? [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 2,
+                        offset: const Offset(0, 1),
+                      ),
+                    ] : null,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Clinic',
+                      style: GoogleFonts.manrope(
+                        fontSize: 14,
+                        fontWeight: selectedTabIndex == 1 ? FontWeight.w600 : FontWeight.w500,
+                        color: selectedTabIndex == 1 ? const Color(0xFF131711) : const Color(0xFF6C8764),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterSection() {
+    final filters = [
+      {'name': 'Rating', 'isSelected': false},
+      {'name': 'Category', 'isSelected': true},
+      {'name': 'Price', 'isSelected': false},
+      {'name': 'Languages', 'isSelected': false},
+      {'name': 'Experience', 'isSelected': false},
+      {'name': 'Gender', 'isSelected': false},
+    ];
+
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: filters.length,
+        itemBuilder: (context, index) {
+          final filter = filters[index];
+          final isSelected = filter['isSelected'] as bool;
+          
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Container(
+              height: 36,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: isSelected ? const Color(0xFFE64CB3).withOpacity(0.1) : const Color(0xFFF4F0F3),
+                borderRadius: BorderRadius.circular(18),
+                border: isSelected ? Border.all(
+                  color: const Color(0xFFE64CB3).withOpacity(0.2),
+                  width: 1,
+                ) : null,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    filter['name'] as String,
+                    style: GoogleFonts.manrope(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFF131711),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Icon(
+                    Icons.keyboard_arrow_down,
+                    size: 16,
+                    color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFF131711),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDateSelector() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Color(0xFFF1F4F0), width: 1),
+          bottom: BorderSide(color: Color(0xFFF1F4F0), width: 1),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.chevron_left,
+                color: Color(0xFF131711),
+                size: 20,
+              ),
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(weekDays.length, (index) {
+                final isSelected = index == selectedDateIndex;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedDateIndex = index;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: isSelected ? const Color(0xFFE64CB3) : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          weekDays[index],
+                          style: GoogleFonts.manrope(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: isSelected ? Colors.white : const Color(0xFF6C8764),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          dates[index].toString(),
+                          style: GoogleFonts.manrope(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: isSelected ? Colors.white : const Color(0xFF131711),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.chevron_right,
+                color: Color(0xFF131711),
+                size: 20,
+              ),
+              padding: EdgeInsets.zero,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTherapistList() {
+    final therapists = [
+      {
+        'name': 'Dr. Priya Sharma',
+        'location': 'Chennai, Tamil Nadu',
+        'rating': 4.8,
+        'reviews': 120,
+        'price': '₹1,500',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuAvx5SRTH8B08c3T7teOC931oNhbxfbWHFOa9f2FZLGggrACmzBEypllMemnQoyqpSXANAtOhL_z35IsUOasWrhKFUN7a7oOdF4jP3HGxn7lnr3EzQ1zRefA1MZG1HC5N_8Zn74iro7c_jxP0bK2pNzxuhjFH7_dImMHFzboO2IaT_vka_uYzkXv4oT4Et7AscAGyjAF3-I-dWH575_NzblApFuSAxTWHrhgpQyZqJBT1d8HxEF2BEO0rUjYcI2KzFpk5Ptw5TazvM',
+        'specialties': ['Cognitive Behavioral Therapy', 'Tamil, English', 'Female'],
+        'timeSlots': ['10:00 AM', '11:00 AM'],
+        'selectedSlot': 1,
+      },
+      {
+        'name': 'Mindful Solutions Clinic',
+        'location': 'Bangalore, Karnataka',
+        'rating': 4.5,
+        'reviews': 85,
+        'price': '₹2,000',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBBDnQw6YiAKvKVLdbTquYe8pKgk7QORt6-nQOEPlUGKFkQ5lo2RVHNqsKFZAnEu7HGooiDV7JSt6ol0-3_C0nY0FOSMilMN30xT81_G3Q1FCphoxKcuCJpCYFqJ98-BVAQp5ypZm9CNsWh1N69RfphtGe9nohxnzf7_RYNZMcRdDUwc_g3sLGR4ldiPmjvRSZmeBnvWhNKEc2jI16hZuhqt_Tztl3rRKcULO_QYoUz9hEc-6wbtnxfIxeiHhCByXQRIW4V-NxmEBI',
+        'specialties': ['Family Therapy', 'Kannada, English, Telugu'],
+        'timeSlots': ['2:00 PM', '3:00 PM'],
+        'selectedSlot': -1,
+      },
+      {
+        'name': 'Dr. Arjun Rao',
+        'location': 'Hyderabad, Telangana',
+        'rating': 4.9,
+        'reviews': 150,
+        'price': '₹1,800',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuB-Gve_XfOEiTpLvh68UWqxHE_M-54OgZn_jMBRbFTV1tizkxK4VNL5LxyNk0LqOw4mqRxwd5TA7KDOWks08WO2Qyk9bNeS1bvC3n-o6klDW_acibuXxJDqqScSZE5xqPScuUm8Jf-38GgIv826qbZkSJ8JjndXfzQYopktRd2is7AJHj14pDW5QmlPD_Nw8flCAXUEJq9JhZdo7z181pNU8nmDLjg23ug9wk6WZ6SQiIYUTVtpxohqEyyz2IPrb-f1qqxxU4uu5VE',
+        'specialties': ['Stress Management', 'Telugu, English, Hindi', 'Male'],
+        'timeSlots': ['4:30 PM'],
+        'selectedSlot': -1,
+      },
+      {
+        'name': 'Kerala Wellness Center',
+        'location': 'Kochi, Kerala',
+        'rating': 4.7,
+        'reviews': 95,
+        'price': '₹2,200',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBqgHolCpWfcaQ9ftOOqATKDkQGnuMttsBNtfitj0nZWeXQAiVUxUbRqyUEG6yYdlAEE3lZlsPjcMvKssTTWzQpSx8MqptSiFbEq4YgugbDOgyZ8R7_dZHPqxgamqE00liPpsHZHvTuLQr8cR5kmgCSMx4vfZJvBGWXPCTBx07csuRssRwm3_0pQsfCIjAhgLItmI4T1Ip14pBWtcUq4m9oNdlmQLzD8BuEE5Z_06ytpUt7_0UTgyepA-kFV3M0_hpHC1ZjLT-DpgA',
+        'specialties': ['Couples Counseling', 'Malayalam, English'],
+        'timeSlots': ['11:00 AM'],
+        'selectedSlot': -1,
+      },
+      {
+        'name': 'Dr. Lakshmi Krishnan',
+        'location': 'Coimbatore, Tamil Nadu',
+        'rating': 4.6,
+        'reviews': 110,
+        'price': '₹1,600',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5ZbvV3l7AWcWfpDa8_8QlpEbfpiKmPr9PB3EGuQKQutVNVzbuQ195OTsR_k2_7zBshqugaVCgbsDnDXQtuYp9NfpUkeKUU7s29gV98XSIjP4VbdX1yM4XsRPBVl7-PRIMEkf0oRS8CxIq19s6tVDOjREC0oV9vgOGQbTm-k9qzGI-UrN0uY1crZrI-pxn7pwWbkArO7Fykt24lvcZTuZ-rH1Cds-uqy3Mo64br4kY2CtbN2XOUrrioCtH4xB29yR-bjlmL8LoioA',
+        'specialties': ['Anxiety Management', 'Tamil, English', 'Female'],
+        'timeSlots': ['3:00 PM'],
+        'selectedSlot': -1,
+      },
+    ];
+
+    return Column(
+      children: therapists.map((therapist) => _buildTherapistCard(therapist)).toList(),
+    );
+  }
+
+  Widget _buildTherapistCard(Map<String, dynamic> therapist) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Color(0xFFF1F4F0), width: 1),
+        ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TherapistProfilePage(
+                doctorName: therapist['name'] as String,
+                imageUrl: therapist['image'] as String,
+              ),
+            ),
+          );
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Image
+            Container(
+              width: 96,
+              height: 96,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: NetworkImage(therapist['image'] as String),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            
+            const SizedBox(width: 16),
+            
+            // Content
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Name, Location, Rating, Price
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              therapist['name'] as String,
+                              style: GoogleFonts.manrope(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF131711),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              therapist['location'] as String,
+                              style: GoogleFonts.manrope(
+                                fontSize: 14,
+                                color: const Color(0xFF6C8764),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  therapist['rating'].toString(),
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF131711),
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '(${therapist['reviews']} reviews)',
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 14,
+                                    color: const Color(0xFF6C8764),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        therapist['price'] as String,
+                        style: GoogleFonts.manrope(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFFE64CB3),
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 12),
+                  
+                  // Specialties
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: (therapist['specialties'] as List<String>).map((specialty) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF4F0F3),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          specialty,
+                          style: GoogleFonts.manrope(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF131711),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  
+                  const SizedBox(height: 12),
+                  
+                  // Time Slots and See More
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: (therapist['timeSlots'] as List<String>).asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final timeSlot = entry.value;
+                            final isSelected = therapist['selectedSlot'] == index;
+                            
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: isSelected ? const Color(0xFFE64CB3).withOpacity(0.1) : Colors.white,
+                                  border: Border.all(
+                                    color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFFF1F4F0),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  timeSlot,
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFF131711),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Text(
+                        'See more',
+                        style: GoogleFonts.manrope(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFFE64CB3),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigation() {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Color(0xFFF4F0F3), width: 1),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(Icons.home, 'Home', 0, false),
+                  _buildNavItem(Icons.calendar_today_outlined, 'Appointments', 1, false),
+                  _buildNavItem(Icons.people_outline, 'Explore', 2, true),
+                  _buildNavItem(Icons.forum_outlined, 'Chat', 3, false),
+                  _buildNavItem(Icons.person_outline, 'Profile', 4, false),
+                ],
+              ),
+            ),
+            Container(
+              height: 20,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, String label, int index, bool isSelected) {
+    return GestureDetector(
+      onTap: () {
+        if (index == 0) { // Home tab
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const OviLandingPage(),
+            ),
+            (route) => false,
+          );
+        } else if (index == 2) { // Explore tab - already on this page
+          // Do nothing, already on explore page
+        } else {
+          // Add other navigation logic here for other tabs if needed
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 32,
+            width: 32,
+            alignment: Alignment.center,
+            child: Icon(
+              icon,
+              color: isSelected ? const Color(0xFF171115) : const Color(0xFF87647B),
+              size: 24,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: GoogleFonts.manrope(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: isSelected ? const Color(0xFF171115) : const Color(0xFF87647B),
+              letterSpacing: 0.015,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

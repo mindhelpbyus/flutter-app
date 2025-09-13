@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'therapist_profile_page.dart';
+import 'explore_page.dart';
 
 class OviLandingPage extends StatefulWidget {
   const OviLandingPage({super.key});
@@ -431,9 +432,27 @@ class _OviLandingPageState extends State<OviLandingPage> {
   Widget _buildNavItem(IconData icon, String label, int index, bool isSelected) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedNavIndex = index;
-        });
+        if (index == 0) { // Home tab
+          // Navigate back to landing page (refresh the current page)
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const OviLandingPage(),
+            ),
+            (route) => false,
+          );
+        } else if (index == 2) { // Explore tab
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ExplorePage(),
+            ),
+          );
+        } else {
+          setState(() {
+            selectedNavIndex = index;
+          });
+        }
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
