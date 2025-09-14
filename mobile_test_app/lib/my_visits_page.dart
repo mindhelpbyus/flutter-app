@@ -192,32 +192,217 @@ class _MyVisitsPageState extends State<MyVisitsPage> with SingleTickerProviderSt
   }
 
   Widget _buildPastVisits() {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(context.horizontalPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.history,
-              size: ResponsiveUtils.getIconSize(context, baseSize: 48.0),
-              color: AppColors.secondary,
+    final pastVisitTherapists = [
+      {
+        'name': 'Dr. Priya Sharma',
+        'specialty': 'Psychotherapist',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuCpSmpIV7ARRhbxn5A5R4bMU4HXYMZZ3EWqaPP62Q9JA-8lqksFT9TSpFvmlMWjmz6EKiTDSYRSwHQvvn2yZnj9XSE2g3LQEjkRB_zr36fULL6B-n053FW2CzjyRd2bwxRcWti5QKn17aRVvePkmuqPP-vTud-6fBaGiCrk17BMOi2jdoVkPzLWM4QA-OgIPN_K7xj3o0EjFLgQOpm_J6YL5rYo6ELlRSHK-2FSplh9cV0u9iQru_O3CxyvR5NoNu5_FpkLScnCuF4',
+        'visitCount': 3,
+      },
+      {
+        'name': 'Dr. Anjali Rao',
+        'specialty': 'Clinical Psychologist',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLY1u7aUrqwZ6ec1wMNBsrc4yNWBpVf4d4dOTh7pQN3oFKepkgjK8kxgJb1Uv_YmD2o-1PqvWRSfDMKkGf6SaAeHWdEXezW5tEpzOOe4vPYBUlXsUyDYQmKHgwTEfJkXhg1QD5GD5s0_7nmkaTHDgCtuGozHRQmKtdu-uJWITFekg5jUBk8djJf9IS2sDRRPaB2HRn1fRAicwhvvRrYW_QWFw8KmFzDPJAoFKhKPjuafVFagLUYHCZ_4aAsujHgfWsD8FQYJEzbFQ',
+        'visitCount': 2,
+      },
+      {
+        'name': 'Dr. Rohan Verma',
+        'specialty': 'Counseling Psychologist',
+        'image': 'https://lh3.googleusercontent.com/aida-public/AB6AXuBNQO7pRk3ZlJl_xdqrtf-3VZ9P14s2tQgp9Lr1NkKn9JjTOe2fWGaxafypKP9NekOJZF5GnNoHz79099g7Im3ZJhcLENl2ZD5fdq6FC1oAevH2oZ6852bRU6oNtzWIXQYN7FIFwXLK-ZkScEFftNdDAlHIn701_aUsXWYXc9mVUEOa9X29E9EU_S08bVD_3iGRKniodqrhbfL_sOng33DosN381FwtBtIlv1g6jNDoeXQtU1LXjeQmOtJBKQ_JYYG6S5DzP9DYQA0',
+        'visitCount': 1,
+      },
+    ];
+
+    return Container(
+      color: AppColors.background,
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.horizontalPadding,
+          vertical: ResponsiveSpacing.md(context),
+        ),
+        itemCount: pastVisitTherapists.length,
+        itemBuilder: (context, index) {
+          return _buildPastVisitCard(pastVisitTherapists[index]);
+        },
+      ),
+    );
+  }
+
+  Widget _buildPastVisitCard(Map<String, dynamic> therapist) {
+    return Material(
+      color: AppColors.materialTransparent,
+      child: InkWell(
+        onTap: () {
+          // Handle therapist card tap - navigate to therapist profile or visit history
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Viewing ${therapist['name']} details'),
+              duration: const Duration(seconds: 2),
             ),
-            SizedBox(height: ResponsiveSpacing.md(context)),
-            Text(
-              'No past visits yet',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.secondary,
+          );
+        },
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getBorderRadius(context, baseRadius: 12.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(ResponsiveSpacing.md(context)),
+          margin: EdgeInsets.only(bottom: ResponsiveSpacing.lg(context)),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: AppColors.border,
+                width: 1,
               ),
             ),
-            SizedBox(height: ResponsiveSpacing.sm(context)),
-            Text(
-              'Your completed appointments will appear here',
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Therapist Image
+              Container(
+                width: 96,
+                height: 96,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    ResponsiveUtils.getBorderRadius(context, baseRadius: 12.0),
+                  ),
+                  image: DecorationImage(
+                    image: NetworkImage(therapist['image'] as String),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              
+              SizedBox(width: ResponsiveSpacing.md(context)),
+              
+              // Therapist Info
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Name
+                    Text(
+                      therapist['name'] as String,
+                      style: GoogleFonts.manrope(
+                        fontSize: context.subheadingFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    
+                    SizedBox(height: ResponsiveSpacing.xs(context)),
+                    
+                    // Specialty
+                    Text(
+                      therapist['specialty'] as String,
+                      style: GoogleFonts.manrope(
+                        fontSize: context.bodyFontSize,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    
+                    SizedBox(height: ResponsiveSpacing.md(context)),
+                    
+                    // Action Buttons
+                    Row(
+                      children: [
+                        // Book Again Button
+                        Material(
+                          color: AppColors.materialTransparent,
+                          child: InkWell(
+                            onTap: () {
+                              _handleBookAgain(therapist['name'] as String);
+                            },
+                            borderRadius: BorderRadius.circular(
+                              ResponsiveUtils.getBorderRadius(context, baseRadius: 8.0),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: ResponsiveSpacing.md(context),
+                                vertical: ResponsiveSpacing.sm(context),
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFE0C7EA), // Light purple from HTML
+                                borderRadius: BorderRadius.circular(
+                                  ResponsiveUtils.getBorderRadius(context, baseRadius: 8.0),
+                                ),
+                              ),
+                              child: Text(
+                                'Book Again',
+                                style: GoogleFonts.manrope(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        SizedBox(width: ResponsiveSpacing.sm(context)),
+                        
+                        // Last Visits Button
+                        Material(
+                          color: AppColors.materialTransparent,
+                          child: InkWell(
+                            onTap: () {
+                              _handleLastVisits(
+                                therapist['name'] as String,
+                                therapist['visitCount'] as int,
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(
+                              ResponsiveUtils.getBorderRadius(context, baseRadius: 8.0),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: ResponsiveSpacing.md(context),
+                                vertical: ResponsiveSpacing.sm(context),
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.surface, // Light gray from HTML
+                                borderRadius: BorderRadius.circular(
+                                  ResponsiveUtils.getBorderRadius(context, baseRadius: 8.0),
+                                ),
+                              ),
+                              child: Text(
+                                'Last Visits (${therapist['visitCount']})',
+                                style: GoogleFonts.manrope(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  void _handleBookAgain(String doctorName) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Booking appointment with $doctorName...'),
+        backgroundColor: AppColors.accent,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _handleLastVisits(String doctorName, int visitCount) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Viewing $visitCount past visits with $doctorName'),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
