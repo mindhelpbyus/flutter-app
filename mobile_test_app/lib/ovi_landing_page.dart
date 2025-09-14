@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'therapist_profile_page.dart';
-import 'explore_page.dart';
+import 'widgets/bottom_navigation_bar.dart';
+import 'utils/responsive_utils.dart';
+import 'theme/responsive_theme.dart';
 
 class OviLandingPage extends StatefulWidget {
   const OviLandingPage({super.key});
@@ -11,7 +12,6 @@ class OviLandingPage extends StatefulWidget {
 }
 
 class _OviLandingPageState extends State<OviLandingPage> {
-  int selectedNavIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -51,39 +51,53 @@ class _OviLandingPageState extends State<OviLandingPage> {
       ),
       
       // Bottom Navigation Bar
-      bottomNavigationBar: _buildBottomNavigation(),
+      bottomNavigationBar: const CustomBottomNavigationBar(selectedIndex: 0),
     );
   }
 
   Widget _buildHeader() {
+    final minTouchTarget = ResponsiveUtils.getMinTouchTarget();
+    final iconSize = ResponsiveUtils.getIconSize(context);
+    
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      constraints: ResponsiveUtils.getContainerConstraints(context),
+      padding: EdgeInsets.fromLTRB(
+        context.horizontalPadding,
+        context.verticalPadding,
+        context.horizontalPadding,
+        ResponsiveSpacing.sm(context),
+      ),
       child: Row(
         children: [
-          const SizedBox(width: 48), // Space for centering
+          SizedBox(width: minTouchTarget), // Space for centering
           Expanded(
             child: Text(
               'OVI',
               textAlign: TextAlign.center,
-              style: GoogleFonts.manrope(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF171115),
-                letterSpacing: -0.015,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontSize: context.subheadingFontSize,
               ),
             ),
           ),
-          SizedBox(
-            width: 48,
-            height: 48,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_outlined,
-                color: Color(0xFF171115),
-                size: 24,
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                // TODO: Handle notification tap
+              },
+              borderRadius: BorderRadius.circular(
+                ResponsiveUtils.getBorderRadius(context, baseRadius: 8.0),
               ),
-              padding: EdgeInsets.zero,
+              child: Container(
+                width: minTouchTarget,
+                height: minTouchTarget,
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.notifications_outlined,
+                  color: AppColors.primary,
+                  size: iconSize,
+                ),
+              ),
             ),
           ),
         ],
@@ -92,40 +106,53 @@ class _OviLandingPageState extends State<OviLandingPage> {
   }
 
   Widget _buildSearchSection() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+    final minHeight = ResponsiveUtils.getMinTouchTarget();
+    final iconSize = ResponsiveUtils.getIconSize(context);
+    
+    return Container(
+      constraints: ResponsiveUtils.getContainerConstraints(context),
+      padding: EdgeInsets.fromLTRB(
+        context.horizontalPadding,
+        ResponsiveSpacing.md(context),
+        context.horizontalPadding,
+        0,
+      ),
       child: Container(
-        height: 48,
+        constraints: BoxConstraints(minHeight: minHeight),
         decoration: BoxDecoration(
-          color: const Color(0xFFF4F0F3),
-          borderRadius: BorderRadius.circular(12),
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.getBorderRadius(context),
+          ),
         ),
         child: Row(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 16, right: 8),
+            Padding(
+              padding: EdgeInsets.only(
+                left: context.horizontalPadding,
+                right: ResponsiveSpacing.sm(context),
+              ),
               child: Icon(
                 Icons.search,
-                color: Color(0xFF87647B),
-                size: 24,
+                color: AppColors.secondary,
+                size: iconSize,
               ),
             ),
             Expanded(
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Search for therapists',
-                  hintStyle: GoogleFonts.manrope(
-                    color: const Color(0xFF87647B),
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
+                  hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.secondary,
+                    fontSize: context.bodyFontSize,
                   ),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: ResponsiveSpacing.md(context),
+                  ),
                 ),
-                style: GoogleFonts.manrope(
-                  color: const Color(0xFF171115),
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: context.bodyFontSize,
                 ),
               ),
             ),
@@ -136,349 +163,393 @@ class _OviLandingPageState extends State<OviLandingPage> {
   }
 
   Widget _buildFeelingsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-          child: Text(
-            'How do you feel today?',
-            style: GoogleFonts.manrope(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF171115),
-              letterSpacing: -0.015,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              _buildFeelingsChip('Anxious'),
-              _buildFeelingsChip('Stressed'),
-              _buildFeelingsChip('Depressed'),
-              _buildFeelingsChip('Addiction'),
-              _buildFeelingsChip('Relationship'),
-              _buildFeelingsChip('Not Sure'),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFeelingsChip(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF4F0F3),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        text,
-        style: GoogleFonts.manrope(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF171115),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUpcomingAppointmentsSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-          child: Text(
-            'Upcoming Appointments',
-            style: GoogleFonts.manrope(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF171115),
-              letterSpacing: -0.015,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 170,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: [
-              _buildAppointmentCard(
-                'Dr. Anya Sharma',
-                'Tue, Jul 23 · 10:00 AM',
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuDOtMvIpbAcU_sCI9NzSZFbQidSwae9_yCeXj4MruJUu7V7I4T2thx-XaVcGA4ncwqSGOjM9i9DV-hZI0ySxjUO7ZlYd64FBOBEuvkrO0WCFHGjj2Gt9da23oFHXjWyHAPoqcu6rw8C8hkCmZM9x5FD5Ec3ECR4FYBVbYxGRYiO0exFE1wdr8xaZSBixJ36NLCRflvcFs2XFlO4eI-vpOgvZ7vz7olWeQUkYN5SgD7D_gB4XU5AaDtax7uxS2OeWOPc9ZnhcteG_bc',
-              ),
-              const SizedBox(width: 12),
-              _buildAppointmentCard(
-                'Dr. Varun Verma',
-                'Wed, Jul 24 · 2:00 PM',
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuAwZM4YIKo65Rl8G0EF8kUbruVag2R40QmimWluJNsrhvD0mgeeGMBx1cwHFHELoZdSDIQIcxx08lHi6ddJnz6Gsyh00pe-RkW6me9giNfGWYPoFrAq69nmD6R0cAWuNq_khGlaw9yG5NZzbdgWyvUMfOJXCLtM7iQ9bQ6ZXiqvAEVmgaU2WpDASmPdd9_NKFZh-3vBU4aNnfyoauv9G3VOU7sCOr3o1FxNfOe4dLw1-YCwYb5aAsCQjnufnQ-HH0RgEoovSe801Pk',
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAppointmentCard(String doctorName, String dateTime, String imageUrl) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TherapistProfilePage(
-              doctorName: doctorName,
-              imageUrl: imageUrl,
-            ),
-          ),
-        );
-      },
-      child: SizedBox(
-        width: 160,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 160,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              doctorName,
-              style: GoogleFonts.manrope(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: const Color(0xFF171115),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              dateTime,
-              style: GoogleFonts.manrope(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: const Color(0xFF87647B),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRecommendedSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-          child: Text(
-            'Recommended for you',
-            style: GoogleFonts.manrope(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF171115),
-              letterSpacing: -0.015,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 140,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: [
-              _buildRecommendedCard(
-                'Dr. Zara Kapoor',
-                'Anxiety, Depression',
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuABxHicQkQgNbBdt7r6bDUbvdkiEePY8uF6ZqUCwbljxKkOluMp4LWTJW-_SQJ3CS_fwsFEskbBp6SR8DIlTqUKDPF-IskqAZLskcickPyHJvSPkOPQU-FFx_dtIw72O2kAIBk9tRBJXThT6phMq-9lnkPUG1tY3B1YPKa72JEN4bmVHEomnu-1VmPYdtcGlqXvRdWbjXT1OnafOyvf9nQc4PPTIbLiUs7g0CnDz-ma1_iwXZr7WTgetaq-D2cHOzAffUBEjaN6IDA',
-              ),
-              const SizedBox(width: 12),
-              _buildRecommendedCard(
-                'Dr. Arjun Singh',
-                'Stress Management, Relationships',
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuD7rEs3Vih81qcwrVLY4BL1LXFKMLmt1Vq7f2_kA9w0mI8aywFtbYMmdsM0yY3jaSa5fmvLsm4600wHJU6eRNYbyQrFkvm8CL_WX0oWTNGdXCpUKg0bPfwzhSiNYEOum05teyrbg0AMd5cfHYA5SLH4755gfhBuuEm24GibFJZSVm9BWdUxCUZOVbgGDWXrNHfomIsCUiBMlkrP86j_c8SOBmq8IfKf7JfgOZoDoygcRHDVa9QCIQzcliBYMhwtFkdCBzq953TZ0d8',
-              ),
-              const SizedBox(width: 12),
-              _buildRecommendedCard(
-                'Dr. Maya Patel',
-                'Trauma, PTSD',
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuCFae2HGqQyjmEGRyuefGVo-NFlKz-DjVxM3a42vqA4sJI_cqjajfT9czfC9ruDXzkn2lUHrpdrNAt5ljcdac4PBtvvTv9Ma5KkjU67Kbed0CUwraOmM11JguN3QUDaNPXubHQfVatM2u7QGDEx5UjZ_t1s5GK_4w5cK8coqK-J3KZZLCxvIRVAgMSfcrbJZU1wGDePLOXuqer_wBAM6d9xErktWt4HYFRP2501RsyfO3tYOYqFfDkU7-1Y8qJb46-9SPOczTv_AcE',
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRecommendedCard(String doctorName, String specialties, String imageUrl) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TherapistProfilePage(
-              doctorName: doctorName,
-              imageUrl: imageUrl,
-            ),
-          ),
-        );
-      },
-      child: SizedBox(
-        width: 160,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 160,
-              height: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    doctorName,
-                    style: GoogleFonts.manrope(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF171115),
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    specialties,
-                    style: GoogleFonts.manrope(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: const Color(0xFF87647B),
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomNavigation() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(color: Color(0xFFF4F0F3), width: 1),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', 0, true),
-                  _buildNavItem(Icons.calendar_today_outlined, 'Appointments', 1, false),
-                  _buildNavItem(Icons.people_outline, 'Explore', 2, false),
-                  _buildNavItem(Icons.forum_outlined, 'Chat', 3, false),
-                  _buildNavItem(Icons.person_outline, 'Profile', 4, false),
-                ],
-              ),
-            ),
-            Container(
-              height: 20,
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, int index, bool isSelected) {
-    return GestureDetector(
-      onTap: () {
-        if (index == 0) { // Home tab
-          // Navigate back to landing page (refresh the current page)
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const OviLandingPage(),
-            ),
-            (route) => false,
-          );
-        } else if (index == 2) { // Explore tab
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ExplorePage(),
-            ),
-          );
-        } else {
-          setState(() {
-            selectedNavIndex = index;
-          });
-        }
-      },
+      constraints: ResponsiveUtils.getContainerConstraints(context),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 32,
-            width: 32,
-            alignment: Alignment.center,
-            child: Icon(
-              isSelected && icon == Icons.home ? Icons.home : icon,
-              color: isSelected ? const Color(0xFF171115) : const Color(0xFF87647B),
-              size: 24,
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.horizontalPadding,
+              ResponsiveSpacing.lg(context),
+              context.horizontalPadding,
+              ResponsiveSpacing.md(context),
+            ),
+            child: Text(
+              'How do you feel today?',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontSize: context.headingFontSize,
+              ),
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: GoogleFonts.manrope(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: isSelected ? const Color(0xFF171115) : const Color(0xFF87647B),
-              letterSpacing: 0.015,
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: ResponsiveSpacing.md(context),
+            ),
+            child: Wrap(
+              spacing: ResponsiveSpacing.md(context),
+              runSpacing: ResponsiveSpacing.md(context),
+              children: [
+                _buildFeelingsChip('Anxious'),
+                _buildFeelingsChip('Stressed'),
+                _buildFeelingsChip('Depressed'),
+                _buildFeelingsChip('Addiction'),
+                _buildFeelingsChip('Relationship'),
+                _buildFeelingsChip('Not Sure'),
+              ],
             ),
           ),
         ],
       ),
     );
   }
+
+  Widget _buildFeelingsChip(String text) {
+    final minTouchTarget = ResponsiveUtils.getMinTouchTarget();
+    
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          // TODO: Handle feeling selection
+        },
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getBorderRadius(context, baseRadius: 20.0),
+        ),
+        child: Container(
+          constraints: BoxConstraints(
+            minHeight: minTouchTarget * 0.7, // Slightly smaller for chips
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: context.horizontalPadding,
+            vertical: ResponsiveSpacing.sm(context),
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.getBorderRadius(context, baseRadius: 20.0),
+            ),
+          ),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontSize: context.bodyFontSize,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUpcomingAppointmentsSection() {
+    final listHeight = ResponsiveUtils.getListItemHeight(context) + 70; // Extra space for text
+    
+    return Container(
+      constraints: ResponsiveUtils.getContainerConstraints(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.horizontalPadding,
+              ResponsiveSpacing.lg(context),
+              context.horizontalPadding,
+              ResponsiveSpacing.md(context),
+            ),
+            child: Text(
+              'Upcoming Appointments',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontSize: context.headingFontSize,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: listHeight,
+            child: context.isTablet || context.isDesktop
+                ? _buildAppointmentGrid()
+                : _buildAppointmentList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppointmentList() {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.symmetric(horizontal: context.horizontalPadding),
+      children: [
+        _buildAppointmentCard(
+          'Dr. Anya Sharma',
+          'Tue, Jul 23 · 10:00 AM',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuDOtMvIpbAcU_sCI9NzSZFbQidSwae9_yCeXj4MruJUu7V7I4T2thx-XaVcGA4ncwqSGOjM9i9DV-hZI0ySxjUO7ZlYd64FBOBEuvkrO0WCFHGjj2Gt9da23oFHXjWyHAPoqcu6rw8C8hkCmZM9x5FD5Ec3ECR4FYBVbYxGRYiO0exFE1wdr8xaZSBixJ36NLCRflvcFs2XFlO4eI-vpOgvZ7vz7olWeQUkYN5SgD7D_gB4XU5AaDtax7uxS2OeWOPc9ZnhcteG_bc',
+        ),
+        SizedBox(width: ResponsiveSpacing.md(context)),
+        _buildAppointmentCard(
+          'Dr. Varun Verma',
+          'Wed, Jul 24 · 2:00 PM',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuAwZM4YIKo65Rl8G0EF8kUbruVag2R40QmimWluJNsrhvD0mgeeGMBx1cwHFHELoZdSDIQIcxx08lHi6ddJnz6Gsyh00pe-RkW6me9giNfGWYPoFrAq69nmD6R0cAWuNq_khGlaw9yG5NZzbdgWyvUMfOJXCLtM7iQ9bQ6ZXiqvAEVmgaU2WpDASmPdd9_NKFZh-3vBU4aNnfyoauv9G3VOU7sCOr3o1FxNfOe4dLw1-YCwYb5aAsCQjnufnQ-HH0RgEoovSe801Pk',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAppointmentGrid() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.horizontalPadding),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildAppointmentCard(
+              'Dr. Anya Sharma',
+              'Tue, Jul 23 · 10:00 AM',
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuDOtMvIpbAcU_sCI9NzSZFbQidSwae9_yCeXj4MruJUu7V7I4T2thx-XaVcGA4ncwqSGOjM9i9DV-hZI0ySxjUO7ZlYd64FBOBEuvkrO0WCFHGjj2Gt9da23oFHXjWyHAPoqcu6rw8C8hkCmZM9x5FD5Ec3ECR4FYBVbYxGRYiO0exFE1wdr8xaZSBixJ36NLCRflvcFs2XFlO4eI-vpOgvZ7vz7olWeQUkYN5SgD7D_gB4XU5AaDtax7uxS2OeWOPc9ZnhcteG_bc',
+            ),
+          ),
+          SizedBox(width: ResponsiveSpacing.md(context)),
+          Expanded(
+            child: _buildAppointmentCard(
+              'Dr. Varun Verma',
+              'Wed, Jul 24 · 2:00 PM',
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuAwZM4YIKo65Rl8G0EF8kUbruVag2R40QmimWluJNsrhvD0mgeeGMBx1cwHFHELoZdSDIQIcxx08lHi6ddJnz6Gsyh00pe-RkW6me9giNfGWYPoFrAq69nmD6R0cAWuNq_khGlaw9yG5NZzbdgWyvUMfOJXCLtM7iQ9bQ6ZXiqvAEVmgaU2WpDASmPdd9_NKFZh-3vBU4aNnfyoauv9G3VOU7sCOr3o1FxNfOe4dLw1-YCwYb5aAsCQjnufnQ-HH0RgEoovSe801Pk',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppointmentCard(String doctorName, String dateTime, String imageUrl) {
+    final imageHeight = ResponsiveUtils.getListItemHeight(context);
+    
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TherapistProfilePage(
+                doctorName: doctorName,
+                imageUrl: imageUrl,
+              ),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getBorderRadius(context),
+        ),
+        child: Container(
+          width: context.isTablet || context.isDesktop ? null : ResponsiveUtils.getCardWidth(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: imageHeight,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    ResponsiveUtils.getBorderRadius(context),
+                  ),
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: ResponsiveSpacing.md(context)),
+              Text(
+                doctorName,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: context.subheadingFontSize,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: ResponsiveSpacing.xs(context)),
+              Text(
+                dateTime,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: context.bodyFontSize,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRecommendedSection() {
+    final listHeight = ResponsiveUtils.getListItemHeight(context) + 60; // Extra space for text
+    
+    return Container(
+      constraints: ResponsiveUtils.getContainerConstraints(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.horizontalPadding,
+              ResponsiveSpacing.lg(context),
+              context.horizontalPadding,
+              ResponsiveSpacing.md(context),
+            ),
+            child: Text(
+              'Recommended for you',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontSize: context.headingFontSize,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: listHeight,
+            child: context.isTablet || context.isDesktop
+                ? _buildRecommendedGrid()
+                : _buildRecommendedList(),
+          ),
+          SizedBox(height: ResponsiveSpacing.lg(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecommendedList() {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.symmetric(horizontal: context.horizontalPadding),
+      children: [
+        _buildRecommendedCard(
+          'Dr. Zara Kapoor',
+          'Anxiety, Depression',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuABxHicQkQgNbBdt7r6bDUbvdkiEePY8uF6ZqUCwbljxKkOluMp4LWTJW-_SQJ3CS_fwsFEskbBp6SR8DIlTqUKDPF-IskqAZLskcickPyHJvSPkOPQU-FFx_dtIw72O2kAIBk9tRBJXThT6phMq-9lnkPUG1tY3B1YPKa72JEN4bmVHEomnu-1VmPYdtcGlqXvRdWbjXT1OnafOyvf9nQc4PPTIbLiUs7g0CnDz-ma1_iwXZr7WTgetaq-D2cHOzAffUBEjaN6IDA',
+        ),
+        SizedBox(width: ResponsiveSpacing.md(context)),
+        _buildRecommendedCard(
+          'Dr. Arjun Singh',
+          'Stress Management, Relationships',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuD7rEs3Vih81qcwrVLY4BL1LXFKMLmt1Vq7f2_kA9w0mI8aywFtbYMmdsM0yY3jaSa5fmvLsm4600wHJU6eRNYbyQrFkvm8CL_WX0oWTNGdXCpUKg0bPfwzhSiNYEOum05teyrbg0AMd5cfHYA5SLH4755gfhBuuEm24GibFJZSVm9BWdUxCUZOVbgGDWXrNHfomIsCUiBMlkrP86j_c8SOBmq8IfKf7JfgOZoDoygcRHDVa9QCIQzcliBYMhwtFkdCBzq953TZ0d8',
+        ),
+        SizedBox(width: ResponsiveSpacing.md(context)),
+        _buildRecommendedCard(
+          'Dr. Maya Patel',
+          'Trauma, PTSD',
+          'https://lh3.googleusercontent.com/aida-public/AB6AXuCFae2HGqQyjmEGRyuefGVo-NFlKz-DjVxM3a42vqA4sJI_cqjajfT9czfC9ruDXzkn2lUHrpdrNAt5ljcdac4PBtvvTv9Ma5KkjU67Kbed0CUwraOmM11JguN3QUDaNPXubHQfVatM2u7QGDEx5UjZ_t1s5GK_4w5cK8coqK-J3KZZLCxvIRVAgMSfcrbJZU1wGDePLOXuqer_wBAM6d9xErktWt4HYFRP2501RsyfO3tYOYqFfDkU7-1Y8qJb46-9SPOczTv_AcE',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRecommendedGrid() {
+    final gridColumns = ResponsiveUtils.getGridColumns(context);
+    
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.horizontalPadding),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildRecommendedCard(
+              'Dr. Zara Kapoor',
+              'Anxiety, Depression',
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuABxHicQkQgNbBdt7r6bDUbvdkiEePY8uF6ZqUCwbljxKkOluMp4LWTJW-_SQJ3CS_fwsFEskbBp6SR8DIlTqUKDPF-IskqAZLskcickPyHJvSPkOPQU-FFx_dtIw72O2kAIBk9tRBJXThT6phMq-9lnkPUG1tY3B1YPKa72JEN4bmVHEomnu-1VmPYdtcGlqXvRdWbjXT1OnafOyvf9nQc4PPTIbLiUs7g0CnDz-ma1_iwXZr7WTgetaq-D2cHOzAffUBEjaN6IDA',
+            ),
+          ),
+          SizedBox(width: ResponsiveSpacing.md(context)),
+          Expanded(
+            child: _buildRecommendedCard(
+              'Dr. Arjun Singh',
+              'Stress Management, Relationships',
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuD7rEs3Vih81qcwrVLY4BL1LXFKMLmt1Vq7f2_kA9w0mI8aywFtbYMmdsM0yY3jaSa5fmvLsm4600wHJU6eRNYbyQrFkvm8CL_WX0oWTNGdXCpUKg0bPfwzhSiNYEOum05teyrbg0AMd5cfHYA5SLH4755gfhBuuEm24GibFJZSVm9BWdUxCUZOVbgGDWXrNHfomIsCUiBMlkrP86j_c8SOBmq8IfKf7JfgOZoDoygcRHDVa9QCIQzcliBYMhwtFkdCBzq953TZ0d8',
+            ),
+          ),
+          if (gridColumns > 2) ...[
+            SizedBox(width: ResponsiveSpacing.md(context)),
+            Expanded(
+              child: _buildRecommendedCard(
+                'Dr. Maya Patel',
+                'Trauma, PTSD',
+                'https://lh3.googleusercontent.com/aida-public/AB6AXuCFae2HGqQyjmEGRyuefGVo-NFlKz-DjVxM3a42vqA4sJI_cqjajfT9czfC9ruDXzkn2lUHrpdrNAt5ljcdac4PBtvvTv9Ma5KkjU67Kbed0CUwraOmM11JguN3QUDaNPXubHQfVatM2u7QGDEx5UjZ_t1s5GK_4w5cK8coqK-J3KZZLCxvIRVAgMSfcrbJZU1wGDePLOXuqer_wBAM6d9xErktWt4HYFRP2501RsyfO3tYOYqFfDkU7-1Y8qJb46-9SPOczTv_AcE',
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecommendedCard(String doctorName, String specialties, String imageUrl) {
+    final cardWidth = ResponsiveUtils.getCardWidth(context);
+    final imageHeight = ResponsiveUtils.getListItemHeight(context) * 0.8;
+    
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TherapistProfilePage(
+                doctorName: doctorName,
+                imageUrl: imageUrl,
+              ),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.getBorderRadius(context),
+        ),
+        child: Container(
+          width: context.isTablet || context.isDesktop ? null : cardWidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                height: imageHeight,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    ResponsiveUtils.getBorderRadius(context),
+                  ),
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: ResponsiveSpacing.xs(context)),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      doctorName,
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontSize: context.bodyFontSize,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: ResponsiveSpacing.xs(context) / 2),
+                    Text(
+                      specialties,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: context.captionFontSize,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }

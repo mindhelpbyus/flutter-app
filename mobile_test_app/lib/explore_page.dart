@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'therapist_profile_page.dart';
-import 'ovi_landing_page.dart';
+import 'widgets/bottom_navigation_bar.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -50,7 +50,7 @@ class _ExplorePageState extends State<ExplorePage> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigation(),
+      bottomNavigationBar: const CustomBottomNavigationBar(selectedIndex: 2),
     );
   }
 
@@ -688,84 +688,4 @@ class _ExplorePageState extends State<ExplorePage> {
     );
   }
 
-  Widget _buildBottomNavigation() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(color: Color(0xFFF4F0F3), width: 1),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', 0, false),
-                  _buildNavItem(Icons.calendar_today_outlined, 'Appointments', 1, false),
-                  _buildNavItem(Icons.people_outline, 'Explore', 2, true),
-                  _buildNavItem(Icons.forum_outlined, 'Chat', 3, false),
-                  _buildNavItem(Icons.person_outline, 'Profile', 4, false),
-                ],
-              ),
-            ),
-            Container(
-              height: 20,
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, int index, bool isSelected) {
-    return GestureDetector(
-      onTap: () {
-        if (index == 0) { // Home tab
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const OviLandingPage(),
-            ),
-            (route) => false,
-          );
-        } else if (index == 2) { // Explore tab - already on this page
-          // Do nothing, already on explore page
-        } else {
-          // Add other navigation logic here for other tabs if needed
-        }
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 32,
-            width: 32,
-            alignment: Alignment.center,
-            child: Icon(
-              icon,
-              color: isSelected ? const Color(0xFF171115) : const Color(0xFF87647B),
-              size: 24,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: GoogleFonts.manrope(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: isSelected ? const Color(0xFF171115) : const Color(0xFF87647B),
-              letterSpacing: 0.015,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
