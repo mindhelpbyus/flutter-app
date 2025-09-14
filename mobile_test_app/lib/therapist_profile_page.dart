@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'utils/app_colors.dart';
+import 'book_appointment_page.dart';
+import 'chat_page.dart';
 
 class TherapistProfilePage extends StatefulWidget {
   final String doctorName;
@@ -920,40 +922,66 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE64CB3),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Book Appointment',
-                        style: GoogleFonts.splineSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textOnAccent,
-                          letterSpacing: 0.015,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookAppointmentPage(
+                              doctorName: widget.doctorName,
+                              imageUrl: widget.imageUrl,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE64CB3),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Book Appointment',
+                          style: GoogleFonts.splineSans(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textOnAccent,
+                            letterSpacing: 0.015,
+                          ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF4F0F3),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Chat',
-                        style: GoogleFonts.splineSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF171115),
-                          letterSpacing: 0.015,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                              doctorName: widget.doctorName,
+                              doctorImageUrl: widget.imageUrl,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF4F0F3),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Chat',
+                          style: GoogleFonts.splineSans(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF171115),
+                            letterSpacing: 0.015,
+                          ),
                         ),
                       ),
                     ),
