@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'utils/app_colors.dart';
 
 class TherapistProfilePage extends StatefulWidget {
   final String doctorName;
@@ -21,7 +22,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -449,7 +450,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             height: 48,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isSelected ? const Color(0xFFE64CB3) : Colors.transparent,
+              color: isSelected ? AppColors.accent : AppColors.materialTransparent,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -457,7 +458,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
               style: GoogleFonts.splineSans(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: isSelected ? Colors.white : const Color(0xFF171115),
+                color: isSelected ? AppColors.textOnAccent : AppColors.textPrimary,
               ),
             ),
           ),
@@ -907,7 +908,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
   Widget _buildBottomActions() {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.background,
       ),
       child: SafeArea(
         top: false,
@@ -931,7 +932,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
                         style: GoogleFonts.splineSans(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: AppColors.textOnAccent,
                           letterSpacing: 0.015,
                         ),
                       ),
@@ -962,7 +963,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             Container(
               height: 20,
-              color: Colors.white,
+              color: AppColors.background,
             ),
           ],
         ),

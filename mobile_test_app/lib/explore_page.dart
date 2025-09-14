@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'therapist_profile_page.dart';
 import 'widgets/bottom_navigation_bar.dart';
+import 'utils/app_colors.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -20,7 +21,7 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -58,10 +59,10 @@ class _ExplorePageState extends State<ExplorePage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.background,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: AppColors.shadowLight,
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -77,13 +78,13 @@ class _ExplorePageState extends State<ExplorePage> {
                 height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.transparent,
+                  color: AppColors.materialTransparent,
                 ),
                 child: IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back,
-                    color: Color(0xFF131711),
+                    color: AppColors.primary,
                     size: 24,
                   ),
                   padding: EdgeInsets.zero,
@@ -96,7 +97,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   style: GoogleFonts.manrope(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF131711),
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ),
@@ -105,15 +106,15 @@ class _ExplorePageState extends State<ExplorePage> {
                 height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.transparent,
+                  color: AppColors.materialTransparent,
                 ),
                 child: Stack(
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.tune,
-                        color: Color(0xFF131711),
+                        color: AppColors.primary,
                         size: 24,
                       ),
                       padding: EdgeInsets.zero,
@@ -124,8 +125,8 @@ class _ExplorePageState extends State<ExplorePage> {
                           child: Container(
                             width: 16,
                             height: 16,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFE64CB3),
+                            decoration: BoxDecoration(
+                              color: AppColors.accent,
                               shape: BoxShape.circle,
                             ),
                         child: Center(
@@ -134,7 +135,7 @@ class _ExplorePageState extends State<ExplorePage> {
                             style: GoogleFonts.manrope(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: AppColors.textOnAccent,
                             ),
                           ),
                         ),
@@ -152,16 +153,16 @@ class _ExplorePageState extends State<ExplorePage> {
           Container(
             height: 48,
             decoration: BoxDecoration(
-              color: const Color(0xFFF4F0F3),
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(24),
             ),
             child: Row(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 12, right: 8),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12, right: 8),
                   child: Icon(
                     Icons.search,
-                    color: Color(0xFF6C8764),
+                    color: AppColors.secondary,
                     size: 20,
                   ),
                 ),
@@ -171,14 +172,14 @@ class _ExplorePageState extends State<ExplorePage> {
                       hintText: 'Search for therapists or clinics',
                       hintStyle: GoogleFonts.manrope(
                         fontSize: 16,
-                        color: const Color(0xFF6C8764),
+                        color: AppColors.secondary,
                       ),
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     style: GoogleFonts.manrope(
                       fontSize: 16,
-                      color: const Color(0xFF131711),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -193,10 +194,10 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget _buildTabSection() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Color(0xFFF1F4F0),
+            color: AppColors.border,
             width: 1,
           ),
         ),
@@ -205,7 +206,7 @@ class _ExplorePageState extends State<ExplorePage> {
         height: 40,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: const Color(0xFFF4F0F3),
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -220,11 +221,11 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: Container(
                   height: 32,
                   decoration: BoxDecoration(
-                    color: selectedTabIndex == 0 ? Colors.white : Colors.transparent,
+                    color: selectedTabIndex == 0 ? AppColors.background : AppColors.materialTransparent,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: selectedTabIndex == 0 ? [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: AppColors.shadowMedium,
                         blurRadius: 2,
                         offset: const Offset(0, 1),
                       ),
@@ -236,7 +237,7 @@ class _ExplorePageState extends State<ExplorePage> {
                       style: GoogleFonts.manrope(
                         fontSize: 14,
                         fontWeight: selectedTabIndex == 0 ? FontWeight.w600 : FontWeight.w500,
-                        color: selectedTabIndex == 0 ? const Color(0xFF131711) : const Color(0xFF6C8764),
+                        color: selectedTabIndex == 0 ? AppColors.textPrimary : AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -253,11 +254,11 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: Container(
                   height: 32,
                   decoration: BoxDecoration(
-                    color: selectedTabIndex == 1 ? Colors.white : Colors.transparent,
+                    color: selectedTabIndex == 1 ? AppColors.background : AppColors.materialTransparent,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: selectedTabIndex == 1 ? [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: AppColors.shadowMedium,
                         blurRadius: 2,
                         offset: const Offset(0, 1),
                       ),
@@ -269,7 +270,7 @@ class _ExplorePageState extends State<ExplorePage> {
                       style: GoogleFonts.manrope(
                         fontSize: 14,
                         fontWeight: selectedTabIndex == 1 ? FontWeight.w600 : FontWeight.w500,
-                        color: selectedTabIndex == 1 ? const Color(0xFF131711) : const Color(0xFF6C8764),
+                        color: selectedTabIndex == 1 ? AppColors.textPrimary : AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -308,10 +309,10 @@ class _ExplorePageState extends State<ExplorePage> {
               height: 36,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFFE64CB3).withOpacity(0.1) : const Color(0xFFF4F0F3),
+                color: isSelected ? AppColors.accent.withOpacity(0.1) : AppColors.surface,
                 borderRadius: BorderRadius.circular(18),
                 border: isSelected ? Border.all(
-                  color: const Color(0xFFE64CB3).withOpacity(0.2),
+                  color: AppColors.accent.withOpacity(0.2),
                   width: 1,
                 ) : null,
               ),
@@ -323,14 +324,14 @@ class _ExplorePageState extends State<ExplorePage> {
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFF131711),
+                      color: isSelected ? AppColors.accent : AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Icon(
                     Icons.keyboard_arrow_down,
                     size: 16,
-                    color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFF131711),
+                    color: isSelected ? AppColors.accent : AppColors.textPrimary,
                   ),
                 ],
               ),
@@ -344,10 +345,10 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget _buildDateSelector() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: Color(0xFFF1F4F0), width: 1),
-          bottom: BorderSide(color: Color(0xFFF1F4F0), width: 1),
+          top: BorderSide(color: AppColors.border, width: 1),
+          bottom: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
       child: Row(
@@ -357,13 +358,13 @@ class _ExplorePageState extends State<ExplorePage> {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.transparent,
+              color: AppColors.materialTransparent,
             ),
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(
+              icon: Icon(
                 Icons.chevron_left,
-                color: Color(0xFF131711),
+                color: AppColors.textPrimary,
                 size: 20,
               ),
               padding: EdgeInsets.zero,
@@ -383,7 +384,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     decoration: BoxDecoration(
-                      color: isSelected ? const Color(0xFFE64CB3) : Colors.transparent,
+                      color: isSelected ? AppColors.accent : AppColors.materialTransparent,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -394,7 +395,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           style: GoogleFonts.manrope(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: isSelected ? Colors.white : const Color(0xFF6C8764),
+                            color: isSelected ? AppColors.textOnAccent : AppColors.textSecondary,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -403,7 +404,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           style: GoogleFonts.manrope(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : const Color(0xFF131711),
+                            color: isSelected ? AppColors.textOnAccent : AppColors.textPrimary,
                           ),
                         ),
                       ],
@@ -418,13 +419,13 @@ class _ExplorePageState extends State<ExplorePage> {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.transparent,
+              color: AppColors.materialTransparent,
             ),
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(
+              icon: Icon(
                 Icons.chevron_right,
-                color: Color(0xFF131711),
+                color: AppColors.textPrimary,
                 size: 20,
               ),
               padding: EdgeInsets.zero,
@@ -502,9 +503,9 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget _buildTherapistCard(Map<String, dynamic> therapist) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Color(0xFFF1F4F0), width: 1),
+          bottom: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
       child: GestureDetector(
@@ -555,7 +556,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               style: GoogleFonts.manrope(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: const Color(0xFF131711),
+                                color: AppColors.textPrimary,
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -563,7 +564,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               therapist['location'] as String,
                               style: GoogleFonts.manrope(
                                 fontSize: 14,
-                                color: const Color(0xFF6C8764),
+                                color: AppColors.textSecondary,
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -571,7 +572,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               children: [
                                 const Icon(
                                   Icons.star,
-                                  color: Colors.amber,
+                                  color: AppColors.starRating,
                                   size: 16,
                                 ),
                                 const SizedBox(width: 4),
@@ -580,7 +581,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   style: GoogleFonts.manrope(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF131711),
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                                 const SizedBox(width: 4),
@@ -588,7 +589,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   '(${therapist['reviews']} reviews)',
                                   style: GoogleFonts.manrope(
                                     fontSize: 14,
-                                    color: const Color(0xFF6C8764),
+                                    color: AppColors.textSecondary,
                                   ),
                                 ),
                               ],
@@ -601,7 +602,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         style: GoogleFonts.manrope(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: const Color(0xFFE64CB3),
+                          color: AppColors.accent,
                         ),
                       ),
                     ],
@@ -617,7 +618,7 @@ class _ExplorePageState extends State<ExplorePage> {
                       return Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF4F0F3),
+                          color: AppColors.surface,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -625,7 +626,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           style: GoogleFonts.manrope(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: const Color(0xFF131711),
+                            color: AppColors.textPrimary,
                           ),
                         ),
                       );
@@ -649,9 +650,9 @@ class _ExplorePageState extends State<ExplorePage> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: isSelected ? const Color(0xFFE64CB3).withOpacity(0.1) : Colors.white,
+                                  color: isSelected ? AppColors.accent.withOpacity(0.1) : AppColors.background,
                                   border: Border.all(
-                                    color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFFF1F4F0),
+                                    color: isSelected ? AppColors.accent : AppColors.border,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -661,7 +662,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                   style: GoogleFonts.manrope(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: isSelected ? const Color(0xFFE64CB3) : const Color(0xFF131711),
+                                    color: isSelected ? AppColors.accent : AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -674,7 +675,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         style: GoogleFonts.manrope(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFFE64CB3),
+                          color: AppColors.accent,
                         ),
                       ),
                     ],

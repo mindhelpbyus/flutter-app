@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/responsive_utils.dart';
+import '../utils/app_colors.dart';
 
 class ResponsiveTheme {
   static ThemeData getTheme(BuildContext context) {
     return ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF171115)),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
       useMaterial3: true,
       textTheme: _getResponsiveTextTheme(context),
       appBarTheme: _getResponsiveAppBarTheme(context),
@@ -21,74 +22,74 @@ class ResponsiveTheme {
       headlineLarge: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getHeadingFontSize(context),
         fontWeight: FontWeight.bold,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
         letterSpacing: -0.015,
       ),
       headlineMedium: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getSubheadingFontSize(context),
         fontWeight: FontWeight.w600,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
         letterSpacing: -0.01,
       ),
       titleLarge: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getSubheadingFontSize(context),
         fontWeight: FontWeight.bold,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
         letterSpacing: -0.015,
       ),
       titleMedium: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getBodyFontSize(context) + 2,
         fontWeight: FontWeight.w600,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
       ),
       bodyLarge: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getBodyFontSize(context),
         fontWeight: FontWeight.normal,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
       ),
       bodyMedium: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getBodyFontSize(context),
         fontWeight: FontWeight.normal,
-        color: const Color(0xFF87647B),
+        color: AppColors.textSecondary,
       ),
       bodySmall: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getCaptionFontSize(context),
         fontWeight: FontWeight.normal,
-        color: const Color(0xFF87647B),
+        color: AppColors.textSecondary,
       ),
       labelLarge: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getBodyFontSize(context),
         fontWeight: FontWeight.w500,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
       ),
       labelMedium: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getCaptionFontSize(context) + 2,
         fontWeight: FontWeight.w500,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
       ),
       labelSmall: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getCaptionFontSize(context),
         fontWeight: FontWeight.w500,
-        color: const Color(0xFF87647B),
+        color: AppColors.textSecondary,
       ),
     );
   }
 
   static AppBarTheme _getResponsiveAppBarTheme(BuildContext context) {
     return AppBarTheme(
-      backgroundColor: Colors.white,
-      foregroundColor: const Color(0xFF171115),
+      backgroundColor: AppColors.background,
+      foregroundColor: AppColors.textPrimary,
       elevation: 0,
       centerTitle: true,
       titleTextStyle: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getSubheadingFontSize(context),
         fontWeight: FontWeight.bold,
-        color: const Color(0xFF171115),
+        color: AppColors.textPrimary,
         letterSpacing: -0.015,
       ),
       toolbarHeight: ResponsiveUtils.getAppBarHeight(context),
       iconTheme: IconThemeData(
-        color: const Color(0xFF171115),
+        color: AppColors.iconPrimary,
         size: ResponsiveUtils.getIconSize(context),
       ),
     );
@@ -96,9 +97,9 @@ class ResponsiveTheme {
 
   static BottomNavigationBarThemeData _getResponsiveBottomNavTheme(BuildContext context) {
     return BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
-      selectedItemColor: const Color(0xFF171115),
-      unselectedItemColor: const Color(0xFF87647B),
+      backgroundColor: AppColors.navBackground,
+      selectedItemColor: AppColors.navSelected,
+      unselectedItemColor: AppColors.navUnselected,
       selectedLabelStyle: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getCaptionFontSize(context),
         fontWeight: FontWeight.w500,
@@ -155,7 +156,7 @@ class ResponsiveTheme {
   static InputDecorationTheme _getResponsiveInputTheme(BuildContext context) {
     return InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFFF4F0F3),
+      fillColor: AppColors.inputBackground,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(
           ResponsiveUtils.getBorderRadius(context),
@@ -172,8 +173,8 @@ class ResponsiveTheme {
         borderRadius: BorderRadius.circular(
           ResponsiveUtils.getBorderRadius(context),
         ),
-        borderSide: const BorderSide(
-          color: Color(0xFF171115),
+        borderSide: BorderSide(
+          color: AppColors.inputFocusedBorder,
           width: 2,
         ),
       ),
@@ -183,35 +184,12 @@ class ResponsiveTheme {
       ),
       hintStyle: GoogleFonts.manrope(
         fontSize: ResponsiveUtils.getBodyFontSize(context),
-        color: const Color(0xFF87647B),
+        color: AppColors.inputHint,
       ),
     );
   }
 }
 
-// Color constants for consistent theming
-class AppColors {
-  static const Color primary = Color(0xFF171115);
-  static const Color secondary = Color(0xFF87647B);
-  static const Color accent = Color(0xFFE64CB3);
-  static const Color background = Colors.white;
-  static const Color surface = Color(0xFFF4F0F3);
-  static const Color border = Color(0xFFF1F4F0);
-  static const Color success = Color(0xFF4CAF50);
-  static const Color warning = Color(0xFFFF9800);
-  static const Color error = Color(0xFFF44336);
-  
-  // Gradient colors
-  static const List<Color> primaryGradient = [
-    Color(0xFF171115),
-    Color(0xFF2A1F2D),
-  ];
-  
-  static const List<Color> accentGradient = [
-    Color(0xFFE64CB3),
-    Color(0xFFFF6B9D),
-  ];
-}
 
 // Spacing constants
 class AppSpacing {

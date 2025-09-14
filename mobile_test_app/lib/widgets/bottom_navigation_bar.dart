@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../ovi_landing_page.dart';
+import '../my_visits_page.dart';
 import '../explore_page.dart';
 import '../user_profile_page.dart';
 import '../utils/responsive_utils.dart';
+import '../utils/app_colors.dart';
 import '../theme/responsive_theme.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -32,7 +34,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         boxShadow: isTablet ? [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: AppColors.shadowMedium,
             blurRadius: 8,
             offset: const Offset(0, -2),
           ),
@@ -104,7 +106,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     return Expanded(
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.materialTransparent,
         child: InkWell(
           onTap: () {
             if (onTap != null) {
@@ -170,7 +172,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     final minTouchTarget = ResponsiveUtils.getMinTouchTarget();
 
     return Material(
-      color: Colors.transparent,
+      color: AppColors.materialTransparent,
       child: InkWell(
         onTap: () {
           if (onTap != null) {
@@ -207,8 +209,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
           (route) => false,
         );
         break;
-      case 1: // Appointments tab
-        // TODO: Navigate to appointments page when implemented
+      case 1: // My Visits tab
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyVisitsPage()),
+        );
         break;
       case 2: // Explore tab
         Navigator.push(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'ovi_landing_page.dart';
 import 'theme/responsive_theme.dart';
+import 'utils/app_colors.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,9 +10,9 @@ void main() {
   // Set system UI overlay style for consistent status bar
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor: AppColors.systemStatusBar,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
+      systemNavigationBarColor: AppColors.systemNavigationBar,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );

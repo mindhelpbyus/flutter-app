@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'utils/app_colors.dart';
 
 class GettingStartedPage extends StatelessWidget {
   const GettingStartedPage({super.key});
@@ -7,7 +8,7 @@ class GettingStartedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -279,7 +280,7 @@ class _MindfulMomentsHomeState extends State<MindfulMomentsHome> {
       // Bottom Navigation
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.background,
           border: Border(top: BorderSide(color: Color(0xFFE2E8F0), width: 1)),
           boxShadow: [
             BoxShadow(
@@ -324,7 +325,7 @@ class _MindfulMomentsHomeState extends State<MindfulMomentsHome> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF3B82F6) : Colors.white,
+          color: isSelected ? AppColors.blueAccent : AppColors.background,
           border: Border.all(
             color: isSelected
                 ? const Color(0xFF3B82F6)
@@ -337,7 +338,7 @@ class _MindfulMomentsHomeState extends State<MindfulMomentsHome> {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isSelected ? Colors.white : const Color(0xFF374151),
+            color: isSelected ? AppColors.textOnAccent : AppColors.grayText,
           ),
         ),
       ),
@@ -353,7 +354,7 @@ class _MindfulMomentsHomeState extends State<MindfulMomentsHome> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.background,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(

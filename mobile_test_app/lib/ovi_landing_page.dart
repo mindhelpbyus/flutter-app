@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'therapist_profile_page.dart';
 import 'widgets/bottom_navigation_bar.dart';
 import 'utils/responsive_utils.dart';
+import 'utils/app_colors.dart';
 import 'theme/responsive_theme.dart';
 
 class OviLandingPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _OviLandingPageState extends State<OviLandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -80,7 +81,7 @@ class _OviLandingPageState extends State<OviLandingPage> {
             ),
           ),
           Material(
-            color: Colors.transparent,
+            color: AppColors.materialTransparent,
             child: InkWell(
               onTap: () {
                 // TODO: Handle notification tap
@@ -208,7 +209,7 @@ class _OviLandingPageState extends State<OviLandingPage> {
     final minTouchTarget = ResponsiveUtils.getMinTouchTarget();
     
     return Material(
-      color: Colors.transparent,
+      color: AppColors.materialTransparent,
       child: InkWell(
         onTap: () {
           // TODO: Handle feeling selection
@@ -323,7 +324,7 @@ class _OviLandingPageState extends State<OviLandingPage> {
     final imageHeight = ResponsiveUtils.getListItemHeight(context);
     
     return Material(
-      color: Colors.transparent,
+      color: AppColors.materialTransparent,
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -484,7 +485,7 @@ class _OviLandingPageState extends State<OviLandingPage> {
     final imageHeight = ResponsiveUtils.getListItemHeight(context) * 0.8;
     
     return Material(
-      color: Colors.transparent,
+      color: AppColors.materialTransparent,
       child: InkWell(
         onTap: () {
           Navigator.push(

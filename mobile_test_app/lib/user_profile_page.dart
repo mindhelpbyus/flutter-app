@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'widgets/bottom_navigation_bar.dart';
+import 'theme/responsive_theme.dart';
+import 'utils/app_colors.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -14,7 +16,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -68,7 +70,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         style: GoogleFonts.manrope(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: const Color(0xFF171115),
+          color: AppColors.textPrimary,
           letterSpacing: -0.015,
         ),
       ),
@@ -103,7 +105,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   style: GoogleFonts.manrope(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF171115),
+                    color: AppColors.textPrimary,
                     letterSpacing: -0.015,
                   ),
                 ),
@@ -113,7 +115,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   style: GoogleFonts.manrope(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
-                    color: const Color(0xFF87647B),
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -139,7 +141,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: GoogleFonts.manrope(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF171115),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.015,
                 ),
               ),
@@ -150,7 +152,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   style: GoogleFonts.manrope(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: const Color(0xFFB34CE6),
+                    color: AppColors.accent,
                   ),
                 ),
               ),
@@ -191,7 +193,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF4F0F3),
+          color: AppColors.cardSurface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -201,12 +203,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.cardBackground,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 icon,
-                color: const Color(0xFF171115),
+                color: AppColors.iconPrimary,
                 size: 20,
               ),
             ),
@@ -223,7 +225,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         style: GoogleFonts.manrope(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: const Color(0xFF171115),
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       if (hasDefaultBadge) ...[
@@ -231,7 +233,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFB34CE6),
+                            color: AppColors.pillBackgroundSelected,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -239,7 +241,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             style: GoogleFonts.manrope(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: AppColors.pillTextSelected,
                             ),
                           ),
                         ),
@@ -252,16 +254,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
-                      color: const Color(0xFF87647B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
               ),
             ),
             // Chevron
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Color(0xFF87647B),
+              color: AppColors.iconSecondary,
               size: 20,
             ),
           ],
@@ -285,7 +287,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: GoogleFonts.manrope(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF171115),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.015,
                 ),
               ),
@@ -296,7 +298,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   style: GoogleFonts.manrope(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: const Color(0xFFB34CE6),
+                    color: AppColors.accent,
                   ),
                 ),
               ),
@@ -340,7 +342,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF4F0F3),
+          color: AppColors.cardSurface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -350,12 +352,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.cardBackground,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.attach_money,
-                color: Color(0xFF171115),
+                color: AppColors.iconPrimary,
                 size: 20,
               ),
             ),
@@ -370,7 +372,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xFF171115),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -379,7 +381,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
-                      color: const Color(0xFF87647B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
@@ -391,7 +393,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               style: GoogleFonts.manrope(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF171115),
+                color: AppColors.textPrimary,
               ),
             ),
           ],
@@ -415,7 +417,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: GoogleFonts.manrope(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF171115),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.015,
                 ),
               ),
@@ -426,7 +428,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   style: GoogleFonts.manrope(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: const Color(0xFFB34CE6),
+                    color: AppColors.accent,
                   ),
                 ),
               ),
@@ -439,7 +441,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F0F3),
+                color: AppColors.cardSurface,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -449,12 +451,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.cardBackground,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.person,
-                      color: Color(0xFF171115),
+                      color: AppColors.iconPrimary,
                       size: 20,
                     ),
                   ),
@@ -469,7 +471,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           style: GoogleFonts.manrope(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: const Color(0xFF171115),
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -478,16 +480,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           style: GoogleFonts.manrope(
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
-                            color: const Color(0xFF87647B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ],
                     ),
                   ),
                   // Chevron
-                  const Icon(
+                  Icon(
                     Icons.chevron_right,
-                    color: Color(0xFF87647B),
+                    color: AppColors.iconSecondary,
                     size: 20,
                   ),
                 ],
@@ -511,7 +513,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             style: GoogleFonts.manrope(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: const Color(0xFF171115),
+              color: AppColors.textPrimary,
               letterSpacing: -0.015,
             ),
           ),
@@ -559,7 +561,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF4F0F3),
+          color: AppColors.cardSurface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -569,12 +571,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.cardBackground,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 icon,
-                color: const Color(0xFF171115),
+                color: AppColors.iconPrimary,
                 size: 20,
               ),
             ),
@@ -589,7 +591,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: const Color(0xFF171115),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -598,16 +600,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
-                      color: const Color(0xFF87647B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
               ),
             ),
             // Chevron
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Color(0xFF87647B),
+              color: AppColors.iconSecondary,
               size: 20,
             ),
           ],
@@ -625,7 +627,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         style: GoogleFonts.manrope(
           fontSize: 12,
           fontWeight: FontWeight.normal,
-          color: const Color(0xFF87647B),
+          color: AppColors.textSecondary,
         ),
       ),
     );
