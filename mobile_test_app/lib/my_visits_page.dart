@@ -273,7 +273,7 @@ class _MyVisitsPageState extends State<MyVisitsPage> with SingleTickerProviderSt
                         Text(
                           doctorName,
                           style: GoogleFonts.notoSans(
-                            fontSize: context.bodyFontSize,
+                            fontSize: context.subheadingFontSize,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primary,
                           ),
@@ -284,7 +284,7 @@ class _MyVisitsPageState extends State<MyVisitsPage> with SingleTickerProviderSt
                           style: GoogleFonts.manrope(
                             fontSize: context.bodyFontSize,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.accent, // Pink color matching book appointment button
+                            color: AppColors.buttonPrimary, // Pink color matching book appointment button
                           ),
                         ),
                         SizedBox(height: ResponsiveSpacing.xs(context)),

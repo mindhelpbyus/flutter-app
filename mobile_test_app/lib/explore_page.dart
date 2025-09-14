@@ -294,50 +294,51 @@ class _ExplorePageState extends State<ExplorePage> {
     ];
 
     return Container(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: filters.length,
-        itemBuilder: (context, index) {
-          final filter = filters[index];
-          final isSelected = filter['isSelected'] as bool;
-          
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Container(
-              height: 36,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: isSelected ? AppColors.accent.withOpacity(0.1) : AppColors.surface,
-                borderRadius: BorderRadius.circular(18),
-                border: isSelected ? Border.all(
-                  color: AppColors.accent.withOpacity(0.2),
-                  width: 1,
-                ) : null,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    filter['name'] as String,
-                    style: GoogleFonts.manrope(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: SizedBox(
+        height: 32,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: filters.length,
+          itemBuilder: (context, index) {
+            final filter = filters[index];
+            final isSelected = filter['isSelected'] as bool;
+            
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.accent.withOpacity(0.1) : AppColors.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: isSelected ? Border.all(
+                    color: AppColors.accent.withOpacity(0.2),
+                    width: 1,
+                  ) : null,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      filter['name'] as String,
+                      style: GoogleFonts.manrope(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: isSelected ? AppColors.accent : AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 14,
                       color: isSelected ? AppColors.accent : AppColors.textPrimary,
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Icon(
-                    Icons.keyboard_arrow_down,
-                    size: 16,
-                    color: isSelected ? AppColors.accent : AppColors.textPrimary,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
