@@ -122,6 +122,14 @@ class AppColors {
   static const Color lightBorder = Color(0xFFE2E8F0); // Used in getting_started_page
   static const Color starRating = Color(0xFFFFC107); // Used for star ratings (replaces Colors.amber)
   
+  // Mockup specific colors
+  static const Color vevaleHeaderText = Color(0xFF3A3A41); // Header text color from mockup
+  static const Color searchBackground = Color(0xFFF6F6FE); // Search bar background from mockup
+  static const Color searchBorder = Color(0xFF6B6EAB); // Search bar border from mockup
+  static const Color fabBlue = Color(0xFF4F46E5); // FAB button color from mockup
+  static const Color warmBackground = Color(0xFFFDF6E3); // Warm background gradient start
+  static const Color warmBackgroundEnd = Color(0xFFF7E6D3); // Warm background gradient end
+  
   // Utility methods for color variations
   static Color withOpacity(Color color, double opacity) {
     return color.withOpacity(opacity);

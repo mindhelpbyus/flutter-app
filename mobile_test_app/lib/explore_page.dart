@@ -14,9 +14,27 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   int selectedTabIndex = 0;
   int selectedDateIndex = 2; // Today is selected by default
+  final FocusNode _searchFocusNode = FocusNode();
+  bool _isSearchFocused = false;
 
   final List<String> weekDays = ['Mon', 'Tue', 'Today', 'Thu', 'Fri'];
   final List<int> dates = [23, 24, 25, 26, 27];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchFocusNode.addListener(() {
+      setState(() {
+        _isSearchFocused = _searchFocusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,8 +171,19 @@ class _ExplorePageState extends State<ExplorePage> {
           Container(
             height: 48,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: _isSearchFocused ? AppColors.surface.withOpacity(0.8) : AppColors.surface,
               borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: _isSearchFocused ? AppColors.accent : Colors.transparent,
+                width: _isSearchFocused ? 2.0 : 0,
+              ),
+              boxShadow: _isSearchFocused ? [
+                BoxShadow(
+                  color: AppColors.accent.withOpacity(0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ] : null,
             ),
             child: Row(
               children: [
@@ -162,12 +191,13 @@ class _ExplorePageState extends State<ExplorePage> {
                   padding: const EdgeInsets.only(left: 12, right: 8),
                   child: Icon(
                     Icons.search,
-                    color: AppColors.secondary,
+                    color: _isSearchFocused ? AppColors.accent : AppColors.secondary,
                     size: 20,
                   ),
                 ),
                 Expanded(
                   child: TextField(
+                    focusNode: _searchFocusNode,
                     decoration: InputDecoration(
                       hintText: 'Search for therapists or clinics',
                       hintStyle: GoogleFonts.manrope(

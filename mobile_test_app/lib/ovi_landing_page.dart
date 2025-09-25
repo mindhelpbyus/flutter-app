@@ -13,41 +13,77 @@ class OviLandingPage extends StatefulWidget {
 }
 
 class _OviLandingPageState extends State<OviLandingPage> {
+  final FocusNode _searchFocusNode = FocusNode();
+  bool _isSearchFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchFocusNode.addListener(() {
+      setState(() {
+        _isSearchFocused = _searchFocusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Header Section
-            _buildHeader(),
-            
-            // Search Section
-            _buildSearchSection(),
-            
-            // Main Content
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // How do you feel today section
-                    _buildFeelingsSection(),
-                    
-                    // Upcoming Appointments section
-                    _buildUpcomingAppointmentsSection(),
-                    
-                    // Recommended for you section
-                    _buildRecommendedSection(),
-                    
-                    const SizedBox(height: 20),
-                  ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/union 1.png'),
+            fit: BoxFit.cover,
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent,
+              Colors.white.withOpacity(0.3),
+              Colors.white.withOpacity(0.7),
+              Colors.white,
+            ],
+            stops: const [0.0, 0.4, 0.7, 1.0],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Header Section
+              _buildHeader(),
+              
+              // Search Section
+              _buildSearchSection(),
+              
+              // Main Content
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // How do you feel today section
+                      _buildFeelingsSection(),
+                      
+                      // Upcoming Appointments section
+                      _buildUpcomingAppointmentsSection(),
+                      
+                      // Recommended for you section
+                      _buildRecommendedSection(),
+                      
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       
@@ -70,21 +106,12 @@ class _OviLandingPageState extends State<OviLandingPage> {
       ),
       child: Row(
         children: [
-          SizedBox(width: minTouchTarget), // Space for centering
-          Expanded(
-            child: Text(
-              'OVI',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: context.subheadingFontSize,
-              ),
-            ),
-          ),
+          // Hamburger menu icon
           Material(
             color: AppColors.materialTransparent,
             child: InkWell(
               onTap: () {
-                // TODO: Handle notification tap
+                // TODO: Handle menu tap
               },
               borderRadius: BorderRadius.circular(
                 ResponsiveUtils.getBorderRadius(context, baseRadius: 8.0),
@@ -94,9 +121,59 @@ class _OviLandingPageState extends State<OviLandingPage> {
                 height: minTouchTarget,
                 alignment: Alignment.center,
                 child: Icon(
-                  Icons.notifications_outlined,
-                  color: AppColors.primary,
+                  Icons.menu,
+                  color: AppColors.vevaleHeaderText,
                   size: iconSize,
+                ),
+              ),
+            ),
+          ),
+          // Vevale title in center
+          Expanded(
+            child: Text(
+              'Vevale',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.vevaleHeaderText,
+                fontSize: 23.85,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+                height: 1.35,
+              ),
+            ),
+          ),
+          // Profile picture
+          Material(
+            color: AppColors.materialTransparent,
+            child: InkWell(
+              onTap: () {
+                // TODO: Handle profile tap
+              },
+              borderRadius: BorderRadius.circular(
+                ResponsiveUtils.getBorderRadius(context, baseRadius: 20.0),
+              ),
+              child: Container(
+                width: 42.67,
+                height: 35.71,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFD9D9D9),
+                  shape: BoxShape.circle,
+                ),
+                child: ClipOval(
+                  child: Image.network(
+                    'https://placehold.co/42x36',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: const Color(0xFFD9D9D9),
+                        child: Icon(
+                          Icons.person,
+                          color: AppColors.secondary,
+                          size: iconSize * 0.7,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -107,7 +184,6 @@ class _OviLandingPageState extends State<OviLandingPage> {
   }
 
   Widget _buildSearchSection() {
-    final minHeight = ResponsiveUtils.getMinTouchTarget();
     final iconSize = ResponsiveUtils.getIconSize(context);
     
     return Container(
@@ -119,38 +195,42 @@ class _OviLandingPageState extends State<OviLandingPage> {
         0,
       ),
       child: Container(
-        constraints: BoxConstraints(minHeight: minHeight),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(
-            ResponsiveUtils.getBorderRadius(context),
+        width: 336.91,
+        height: 40,
+        decoration: ShapeDecoration(
+          color: _isSearchFocused ? const Color(0xFFF6F6FE).withOpacity(0.8) : const Color(0xFFF6F6FE),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: _isSearchFocused ? 2.0 : 0.99,
+              color: _isSearchFocused ? AppColors.accent : const Color(0xFF6B6EAB),
+            ),
+            borderRadius: BorderRadius.circular(57.29),
           ),
         ),
         child: Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(
-                left: context.horizontalPadding,
-                right: ResponsiveSpacing.sm(context),
-              ),
+              padding: const EdgeInsets.only(left: 16, right: 8),
               child: Icon(
                 Icons.search,
-                color: AppColors.secondary,
+                color: _isSearchFocused ? AppColors.accent : const Color(0xFF6B6EAB),
                 size: iconSize,
               ),
             ),
             Expanded(
               child: TextField(
+                focusNode: _searchFocusNode,
                 decoration: InputDecoration(
                   hintText: 'Search for therapists',
                   hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.secondary,
+                    color: const Color(0xFF6B6EAB),
                     fontSize: context.bodyFontSize,
                   ),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: ResponsiveSpacing.md(context),
-                  ),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  filled: false,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 ),
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: context.bodyFontSize,
